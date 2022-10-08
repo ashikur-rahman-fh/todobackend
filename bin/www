@@ -4,16 +4,18 @@
  * Module dependencies.
  */
 
-const dotenv = require('dotenv').config();
 var app = require('../app');
 var debug = require('debug')('todo:server');
 var http = require('http');
+const { PORT } = require('../constants/e_variables');
+const { Sequelize, sequelize } = require('../services/db');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(PORT || '3000');
+console.log('listening to', port)
 app.set('port', port);
 
 /**
