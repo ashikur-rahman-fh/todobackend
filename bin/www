@@ -8,14 +8,13 @@ var app = require('../app');
 var debug = require('debug')('todo:server');
 var http = require('http');
 const { PORT } = require('../constants/e_variables');
-const { Sequelize, sequelize } = require('../services/db');
+const sync_db = require('../models');
 
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(PORT || '3000');
-console.log('listening to', port)
 app.set('port', port);
 
 /**
@@ -91,3 +90,6 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+/* sync database */
+sync_db();

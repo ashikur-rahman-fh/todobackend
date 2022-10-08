@@ -3,7 +3,6 @@ var Sequelize = require('sequelize');
 
 const { DATABASE_CONFIG } = require('../constants/e_variables');
 
-console.log(DATABASE_CONFIG);
 
 var sequelize = new Sequelize(DATABASE_CONFIG.DATABASE, DATABASE_CONFIG.USERNAME, DATABASE_CONFIG.PASSWORD, {
     host: DATABASE_CONFIG.HOST,
@@ -28,7 +27,7 @@ var sequelize = new Sequelize(DATABASE_CONFIG.DATABASE, DATABASE_CONFIG.USERNAME
 const test_db_connection = async () => {
     try {
         await sequelize.authenticate();
-    console.log('DB connection has been established successfully.');
+        console.log('DB connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
