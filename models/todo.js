@@ -5,7 +5,7 @@ const Todo = sequelize.define('Todo', {
         type: Sequelize.DataTypes.STRING,
         defaultValue: 'untitled',
     },
-    desciption: Sequelize.DataTypes.STRING(512),
+    description: Sequelize.DataTypes.STRING(512),
 }, {
     createdAt: 'created_at',
     updatedAt: 'updated_at',

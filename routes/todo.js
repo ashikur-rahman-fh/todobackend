@@ -9,16 +9,16 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-    const { title, desciption } = req.body;
+    const { title, description } = req.body;
 
-    if (!desciption) {
-        return res.status(400).json({ message: 'Desciption can not be empty' });
+    if (!description) {
+        return res.status(400).json({ message: 'Description can not be empty' });
     }
-    if (typeof(desciption) !== 'string') {
-        return res.status(400).json( { message: 'Desciption must be a string.', });
+    if (typeof(description) !== 'string') {
+        return res.status(400).json( { message: 'Description must be a string.', });
     }
 
-    const todo = await Todo.create({ title: title, desciption: desciption });
+    const todo = await Todo.create({ title: title, description: description });
     todo.save();
 
     return res.json(todo);
@@ -37,13 +37,13 @@ router.get('/:id', async (req, res, next) => {
 
 router.patch('/:id', async (req, res, next) => {
     const { id } = req.params;
-    const { title, desciption } = req.body;
+    const { title, description } = req.body;
 
-    if (!desciption) {
-        return res.status(400).json({ message: 'Desciption can not be empty' });
+    if (!description) {
+        return res.status(400).json({ message: 'Description can not be empty' });
     }
-    if (typeof(desciption) !== 'string') {
-        return res.status(400).json( { message: 'Desciption must be a string.', });
+    if (typeof(description) !== 'string') {
+        return res.status(400).json( { message: 'Description must be a string.', });
     }
 
     const todo = await Todo.findOne( { where : { id: id} });
@@ -51,7 +51,7 @@ router.patch('/:id', async (req, res, next) => {
         return res.status(404).json({ message: 'Todo not found!' });
     }
 
-    todo.desciption = desciption;
+    todo.description = description;
     if (title) {
         todo.title = title;
     }
