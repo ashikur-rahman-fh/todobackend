@@ -3,10 +3,21 @@ var Sequelize = require('sequelize');
 
 const { DATABASE_CONFIG } = require('../constants/e_variables');
 
+const REMOTE_DB_SETTINGS = {
+    ...(DATABASE_CONFIG.MODE == 'remote' && {
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+         },   
+    })
+}
 
 var sequelize = new Sequelize(DATABASE_CONFIG.DATABASE, DATABASE_CONFIG.USERNAME, DATABASE_CONFIG.PASSWORD, {
     host: DATABASE_CONFIG.HOST,
     dialect: 'postgres',
+    ...REMOTE_DB_SETTINGS,
     logging: null,
     port: DATABASE_CONFIG.PORT,
     pool: {
