@@ -60,4 +60,17 @@ router.patch('/:id', async (req, res, next) => {
     return res.json(todo);
 });
 
+router.delete('/:id', async (req, res, next) => {
+    const { id } = req.params;
+
+    const todo = await Todo.findOne( { where : { id: id} });
+    if (todo === null) {
+        return res.status(404).json({ message: 'Todo not found!' });
+    }
+
+    todo.destroy();
+
+    return res.status(200).json({ message: "One todos deleted." });
+});
+
 module.exports = router;
