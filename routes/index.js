@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/sample', (req, res, next) => {
-  res.json({ foo: "bar" });
+  res.json({ foo: "bar", deploy: 2 });
 });
 
 module.exports = router;
