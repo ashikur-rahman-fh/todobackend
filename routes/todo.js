@@ -4,9 +4,12 @@ var router = express.Router();
 const Todo = require('../models/todo.model');
 
 router.get('/', async (req, res, next) => {
-    const todos = await Todo.find().select({ title: 1, description: 1 });
+    const { page, page_size } = req.query;
 
-    return res.json({ todos: todos });
+    const todos = await Todo.find().select({ title: 1, description: 1, status: 1 }).skip((page - 1) * page_size).limit(page_size);
+    const totalCount = await Todo.count();
+
+    return res.json({ todos: todos, count: totalCount });
 });
 
 router.post('/', async (req, res, next) => {
