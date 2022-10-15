@@ -8,7 +8,12 @@ var app = require('../app');
 var debug = require('debug')('todo:server');
 var http = require('http');
 const { PORT } = require('../constants/e_variables');
-const sync_db = require('../models');
+
+
+/***
+ * services imports
+ ***/
+const { connectDatabase } = require('../services/db');
 
 /**
  * Get port from environment and store in Express.
@@ -91,5 +96,7 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-/* sync database */
-sync_db();
+/* connect database */
+dbConnection = connectDatabase().catch((error) => {
+  console.log(`Database connection failed. ${error}`);
+});

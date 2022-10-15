@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const todoRouter = require('./routes/todo');
 
-const Todo = require('./models/todo')
 
 var app = express();
 
