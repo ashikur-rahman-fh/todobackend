@@ -8,6 +8,7 @@ const DATABASE_CONFIG = {
     USERNAME: process.env.DB_USERNAME,
     PASSWORD: process.env.DB_PASSWORD,
     MODE: process.env.DB_MODE,
+    NAME: process.env.DB_NAME,
 };
 
 

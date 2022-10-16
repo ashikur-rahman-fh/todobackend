@@ -5,7 +5,7 @@ const connectDatabase = async () => {
     const uri = `mongodb+srv://tododb:${DATABASE_CONFIG.PASSWORD}@todo.wj0akci.mongodb.net/?retryWrites=true&w=majority`
     const options = {
         ssl: DATABASE_CONFIG.MODE === 'dev' || DATABASE_CONFIG.MODE === 'prod',
-        dbName: 'tododb',
+        dbName: DATABASE_CONFIG.DB_NAME,
     };
     await mongoose.connect(uri, { ...options });
 }
