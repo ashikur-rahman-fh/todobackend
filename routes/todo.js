@@ -3,6 +3,8 @@ var router = express.Router();
 
 const Todo = require('../models/todo.model');
 
+const { validateTodo } = require('../services/todo');
+
 router.get('/', async (req, res, next) => {
     const { page, page_size } = req.query;
 
@@ -12,19 +14,20 @@ router.get('/', async (req, res, next) => {
     return res.json({ todos: todos, count: totalCount });
 });
 
-router.post('/', async (req, res, next) => {
-    const { title, description } = req.body;
 
-    if (!description) {
-        return res.status(400).json({ message: 'Description can not be empty' });
-    } else if (typeof(description) !== 'string') {
-        return res.status(400).json( { message: 'Description must be a string.', });
-    } else if (description.length < 5) {
-        return res.status(400).json({ message: 'Description must have 5 characters.' });
+router.post('/', validateTodo, async (req, res, next) => {
+    const { title, description } = req.body;
+    if (!req.validated) {
+        return ;
     }
 
-    const todo = await new Todo({ title: title, description: description });
-    todo.save();
+    let todo;
+    try {
+        todo = await Todo.create({ title: title, description: description });
+        todo.save();
+    } catch (error) {
+        return res.status(500).send({ message: 'Can not process the request.' });
+    }
     
     return res.json(todo);
 });
@@ -40,16 +43,12 @@ router.get('/:id', async (req, res, next) => {
     return res.json(todo);
 });
 
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', validateTodo, async (req, res, next) => {
     const { id } = req.params;
-    const { title, description } = req.body;
+    const { title, description, status } = req.body;
 
-    if (!description) {
-        return res.status(400).json({ message: 'Description can not be empty' });
-    } else if (typeof(description) !== 'string') {
-        return res.status(400).json( { message: 'Description must be a string.', });
-    } else if (description.length < 5) {
-        return res.status(400).json({ message: 'Description must have 5 characters.' });
+    if (!req.validated) {
+        return ;
     }
 
     const todo = await Todo.findOne({ _id: id });
@@ -60,6 +59,9 @@ router.patch('/:id', async (req, res, next) => {
     todo.description = description;
     if (title) {
         todo.title = title;
+    }
+    if (status) {
+        todo.status = status;
     }
     todo.save();
 

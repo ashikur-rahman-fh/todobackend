@@ -1,0 +1,4 @@
+const MIN_DESCRIPTION_LENGTH = 5;
+
+
+module.exports = { MIN_DESCRIPTION_LENGTH };
