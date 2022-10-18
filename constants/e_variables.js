@@ -11,5 +11,9 @@ const DATABASE_CONFIG = {
     NAME: process.env.DB_NAME,
 };
 
+const JWT_TOKENS = {
+    SECRET: process.env.JWT_SECRET_TOKEN,
+    REFRESH: process.env.JWT_REFRESH_TOKEN,
+}
 
-module.exports = { PORT, DATABASE_CONFIG };
+module.exports = { PORT, DATABASE_CONFIG, JWT_TOKENS };

@@ -14,23 +14,6 @@ router.get('/', async(req, res, next) => {
     return res.json({ users: users });
 });
 
-router.post('/', async (req, res, next) => {
-    const { username, password, email } = req.body;
-
-    let user = null;
-    try {
-        user = await User.create({ username, password, email });
-    } catch (error) {
-        return res.status(500).json({ message: 'Can not create user.'} );
-    }
-
-    return res.status(201).json({ message: 'A new user created.', user: {
-        username: user?.username,
-        email: user?.email,
-        _id: user?._id,
-    } });
-});
-
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;
 

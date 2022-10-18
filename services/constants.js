@@ -1,4 +1,5 @@
 const MIN_DESCRIPTION_LENGTH = 5;
+const LOGIN_TIME_OUT_MINUTE = 24 * 60;
 
 
-module.exports = { MIN_DESCRIPTION_LENGTH };
+module.exports = { MIN_DESCRIPTION_LENGTH, LOGIN_TIME_OUT_MINUTE };
