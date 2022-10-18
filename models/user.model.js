@@ -2,6 +2,11 @@ const { Schema, connection } = require('../services/db');
 
 const userSchema = new Schema(
     {
+        name: {
+            type: String,
+            required: true,
+            minlength: 3,
+        },
         username: {
             type: String,
             required: true,

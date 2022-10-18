@@ -9,12 +9,12 @@ const { generateHashedPassword, authenticateUser } = require('../services/users'
 const { LOGIN_TIME_OUT_MINUTE } = require('../services/constants');
 
 router.post('/register', async (req, res, next) => {
-    const { username, password, email } = req.body;
-
+    const { username, password, email, name } = req.body;
+    console.log(name);
     const hashedPassword = await generateHashedPassword(password);
     let user = null;
     try {
-        user = await User.create({ username, password: hashedPassword, email });
+        user = await User.create({ username, password: hashedPassword, email, name });
     } catch (error) {
         return res.status(500).json({ message: 'Can not create user.', error: error.message} );
     }
@@ -45,13 +45,14 @@ router.post("/login", async (req, res, next) => {
 
     const authenticated = await authenticateUser(user.password, password);
     if (!authenticated) {
-        return res.json({ message: "Please check your username and password. "});
+        return res.status(401).json({ message: "Please check your username and password. "});
     }
 
     const tokenUser = {
         id: user?._id,
         username: user?.username,
         email: user?.email,
+        name: user?.name,
     }
     const authToken = await jwt.sign(tokenUser, JWT_TOKENS.SECRET, {expiresIn: `${LOGIN_TIME_OUT_MINUTE}m` });
 
