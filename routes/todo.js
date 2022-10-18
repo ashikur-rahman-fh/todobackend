@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const Todo = require('../models/todo.model');
+const User = require('../models/user.model');
 
 const { validateTodo } = require('../services/todo');
 
@@ -23,7 +24,8 @@ router.post('/', validateTodo, async (req, res, next) => {
 
     let todo;
     try {
-        todo = await Todo.create({ title: title, description: description });
+        const user = await User.findById('634e8b19151e22bf259c2d1f');
+        todo = await Todo.create({ title: title, description: description, creator: user });
         todo.save();
     } catch (error) {
         return res.status(500).send({ message: 'Can not process the request.' });

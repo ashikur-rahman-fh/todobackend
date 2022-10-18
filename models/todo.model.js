@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const { Schema, connection } = require('../services/db');
+const User = require('./user.model');
 
 const todoSchema = new Schema(
     {
@@ -14,7 +16,12 @@ const todoSchema = new Schema(
         status: {
             type: String,
             default: 'pending',
-        }
+        },
+        creator: {
+            type: mongoose.ObjectId,
+            ref: 'User',
+            required: true,
+        },
     },
     {
         timestamps: true,
