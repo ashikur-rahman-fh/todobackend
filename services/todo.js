@@ -21,7 +21,7 @@ const validateTodo = (req, res, next) => {
     next();
 
     if (!req.validated) {
-        return res.json({ message });
+        return res.status(400).json({ message });
     }
 }
 
