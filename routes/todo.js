@@ -16,7 +16,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
     const options = {
         creator: req.user.id,
     }
-    const todos = await Todo.find({ ...options }).select({ title: 1, description: 1, status: 1 }).skip((page - 1) * page_size).limit(page_size);
+    const todos = await Todo.find({ ...options }).select({ title: 1, description: 1, status: 1 }).sort({ createdAt: -1 }).skip((page - 1) * page_size).limit(page_size);
     const totalCount = await Todo.count({ ...options });
 
     return res.json({ todos: todos, count: totalCount });
