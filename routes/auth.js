@@ -10,7 +10,6 @@ const { LOGIN_TIME_OUT_MINUTE } = require('../services/constants');
 
 router.post('/register', async (req, res, next) => {
     const { username, password, email, name } = req.body;
-    console.log(name);
     const hashedPassword = await generateHashedPassword(password);
     let user = null;
     try {

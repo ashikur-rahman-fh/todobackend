@@ -35,7 +35,6 @@ router.post('/', validateTodo, authMiddleware, async (req, res, next) => {
     let todo;
     try {
         const user = await User.findById(req.user.id);
-        console.log(user);
         todo = await Todo.create({ title: title, description: description, creator: user });
         todo.save();
     } catch (error) {
