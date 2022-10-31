@@ -15,6 +15,7 @@ router.get('/', authMiddleware, async (req, res, next) => {
 
     const options = {
         creator: req.user.id,
+        deleted: false,
     }
     const todos = await Todo.find({ ...options }).select({ title: 1, description: 1, status: 1 }).sort({ createdAt: -1 }).skip((page - 1) * page_size).limit(page_size);
     const totalCount = await Todo.count({ ...options });
@@ -65,7 +66,7 @@ router.get('/:id', authMiddleware, async (req, res, next) => {
 
 router.patch('/:id', validateTodo, authMiddleware, async (req, res, next) => {
     const { id } = req.params;
-    const { title, description, status } = req.body;
+    const { title, description, status, deleted } = req.body;
 
     if (!req.validated) {
         return ;
@@ -90,6 +91,9 @@ router.patch('/:id', validateTodo, authMiddleware, async (req, res, next) => {
     }
     if (status) {
         todo.status = status;
+    }
+    if (deleted) {
+        todo.deleted = deleted;
     }
     todo.save();
 

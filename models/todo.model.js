@@ -22,6 +22,10 @@ const todoSchema = new Schema(
             ref: 'User',
             required: true,
         },
+        deleted: {
+            type: Boolean,
+            default: false,
+        }
     },
     {
         timestamps: true,
